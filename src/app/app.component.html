@@ -1,3 +1,51 @@
-<div>
-  Hello Angular
+<div class="main">
+  <div class="container-fluid p-4">
+    <div class="table-div table-responsive">
+      <h4>Posts Data</h4>
+      <table class="table table-bordered">
+        <thead class="text-center">
+          <th>S No.</th>
+          <th>Title</th>
+          <th>Url</th>
+          <th>Created At</th>
+          <th>Author</th>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="PostsData?.length > 0; else loading">
+            <tr
+              *ngFor="let item of PostsData; let idx = index"
+              (click)="openPostsDetailsModal(template)"
+            >
+              <td>{{ idx + 1 }}</td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.url }}</td>
+              <td>{{ item.created_at }}</td>
+              <td>{{ item.author }}</td>
+
+              <ng-template #template>
+                <div class="modal-header">
+                  <h4 class="modal-title pull-left">Post Details in Json</h4>
+                  <button
+                    type="button"
+                    class="close pull-right"
+                    aria-label="Close"
+                    (click)="modalRef.hide()"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <app-post-data-details [postDetailsData]="item">
+                  </app-post-data-details>
+                </div>
+              </ng-template>
+            </tr>
+          </ng-container>
+          <ng-template #loading>
+            <h6>Lodading ....</h6>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
